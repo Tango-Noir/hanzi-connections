@@ -10,25 +10,36 @@
   <main class="app" id="app">
     <div class="header">
       <button id="help-btn" type="button" class="help-btn" aria-label="帮助">帮助</button>
+      <button id="back-btn" type="button" class="back-btn" style="display:none">← 返回</button>
       <h1>汉字连线</h1>
-      <label class="date-field">
-        <span>日期</span>
-        <input type="date" id="date-input" />
-      </label>
+      <button id="date-btn" type="button" class="date-btn">📅 2026-11-13</button>
       <p class="status" id="status"></p>
     </div>
     <section id="stage"></section>
 
+    <div id="cal-overlay" class="cal-overlay">
+      <div class="cal-box">
+        <div class="cal-nav">
+          <button id="cal-prev" type="button" class="cal-nav-btn">«</button>
+          <span id="cal-title" class="cal-title">2026 年 11 月</span>
+          <button id="cal-next" type="button" class="cal-nav-btn">»</button>
+        </div>
+        <div id="cal-grid" class="cal-grid"></div>
+        <p class="cal-tip">只有已出题的日期可以选</p>
+        <button id="cal-close" type="button" class="submit">完成</button>
+      </div>
+    </div>
+
     <div id="help-overlay" class="help-overlay">
       <div class="help-box">
         <h2>怎么玩</h2>
-        <p class="help-intro">把 16 个汉字分成 4 组，每组 4 个字。组内四个字存在某种共同联系：可能是同类事物、同音、同偏旁，也可能都能和某个字组成词。</p>
+        <p class="help-intro">把 16 个字或词分成 <span class="hl">4 组</span>，每组 <span class="hl">4 个</span>。组内的四个字或词存在某种共同联系。</p>
         <ul class="help-list">
-          <li>点选 4 个字后点「提交」，再次点击可取消选中。</li>
-          <li>猜对：该组锁定，并显示类别名。</li>
-          <li>猜错：扣 1 次机会；若其中有 3 个字属于同一组，会提示「差一点」。</li>
+          <li>点选 4 个字或词后点「提交」，再次点击可取消选中。</li>
+          <li>猜对：该组锁定，并显示其中的联系。</li>
+          <li>猜错：扣 1 次机会；<span class="hl">若其中有 3 个字或词属于同一组，会提示「差一点」</span>。</li>
           <li>共 4 次机会，用完即失败，并公布全部答案。</li>
-          <li>「洗牌」只打乱未解出的字。</li>
+          <li>「洗牌」只打乱未解出的字或词。</li>
           <li>每天更新一道题。</li>
         </ul>
         <button id="help-close" type="button" class="submit">知道了</button>
@@ -36,6 +47,8 @@
     </div>
   </main>
   <script src="puzzles.js"></script>
+  <script src="puzzles-2zi.js"></script>
+  <script src="puzzles-4zi.js"></script>
   <script src="app.js"></script>
 </body>
 </html>
