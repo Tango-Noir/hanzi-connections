@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>汉字连线</title>
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <main class="app" id="app">
+    <div class="header">
+      <button id="help-btn" type="button" class="help-btn" aria-label="帮助">？</button>
+      <h1>汉字连线</h1>
+      <label class="date-field">
+        <span>日期</span>
+        <input type="date" id="date-input" />
+      </label>
+      <p class="status" id="status"></p>
+    </div>
+    <section id="stage"></section>
+
+    <div id="help-overlay" class="help-overlay">
+      <div class="help-box">
+        <h2>怎么玩</h2>
+        <ul class="help-list">
+          <li>点 4 个字，提交。</li>
+          <li>4 个字同属一组，就对了。</li>
+          <li>猜对 4 组，胜利。</li>
+          <li>最多只能错 4 次。</li>
+        </ul>
+        <button id="help-close" type="button" class="submit">知道了</button>
+      </div>
+    </div>
+  </main>
+  <script src="puzzles.js"></script>
+  <script src="app.js"></script>
+</body>
+</html>
