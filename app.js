@@ -4,6 +4,17 @@
   const MAX_MISTAKES = 4;
   const KNOWN_COLORS = ['yellow', 'green', 'blue', 'purple'];
 
+  // 帮助文案（帮助弹窗 与 教程页 共用）
+  const HELP_INTRO_HTML = '把 16 个字或词分成 <span class="hl">4 组</span>，每组 <span class="hl">4 个</span>。组内的四个字或词存在某种共同联系。';
+  const HELP_ITEMS_HTML = [
+    '点选 4 个字或词后点「提交」，再次点击可取消选中。',
+    '猜对：该组锁定，并显示其中的联系。',
+    '猜错：扣 1 次机会；<span class="hl">若其中有 3 个字或词属于同一组，会提示「差一点」</span>。',
+    '共 4 次机会，用完即失败，并公布全部答案。',
+    '「洗牌」只打乱未解出的字或词。',
+    '每天更新一道题。',
+  ];
+
   // 三种挑战：单字 / 二字 / 四字
   const MODES = {
     1: { label: '单字', varName: 'PUZZLES' },
@@ -308,6 +319,7 @@
     statusEl.textContent = '';
     backBtn.style.display = 'none';
     dateBtn.style.display = 'block';
+    helpBtn.style.display = 'block';
 
     const box = document.createElement('div');
     box.className = 'select';
@@ -355,6 +367,8 @@
     backBtn.style.display = 'block';
     // 教程题与日期无关：隐藏日期按钮，防止误选日期
     dateBtn.style.display = currentMode === 'tutorial' ? 'none' : 'block';
+    // 教程里有内嵌的帮助内容，不需要帮助按钮
+    helpBtn.style.display = currentMode === 'tutorial' ? 'none' : 'block';
     renderHearts(state);
 
     // 已解出的组（显示在网格上方；结束后由结算面板统一展示）
@@ -415,13 +429,32 @@
     shuffleBtn.disabled = state.over;
     shuffleBtn.addEventListener('click', () => onShuffle(state));
     btnRow.appendChild(shuffleBtn);
-    const hint = document.createElement('p');
-    hint.className = 'hint';
-    hint.textContent = '点选 4 个字后提交';
     controls.appendChild(submitBtn);
     controls.appendChild(btnRow);
-    controls.appendChild(hint);
     stage.appendChild(controls);
+
+    // 教程模式：按钮下方直接展示「帮助」内容
+    if (currentMode === 'tutorial') {
+      const help = document.createElement('div');
+      help.className = 'tutorial-help';
+      const ht = document.createElement('p');
+      ht.className = 'th-title';
+      ht.textContent = '怎么玩';
+      const hi = document.createElement('p');
+      hi.className = 'help-intro';
+      hi.innerHTML = HELP_INTRO_HTML;
+      const ul = document.createElement('ul');
+      ul.className = 'help-list';
+      for (const html of HELP_ITEMS_HTML) {
+        const li = document.createElement('li');
+        li.innerHTML = html;
+        ul.appendChild(li);
+      }
+      help.appendChild(ht);
+      help.appendChild(hi);
+      help.appendChild(ul);
+      stage.appendChild(help);
+    }
 
     // 结算面板（直接显示在页面上，不做弹窗）
     if (state.over) {
@@ -606,6 +639,7 @@
   const helpClose = document.getElementById('help-close');
 
   helpBtn.addEventListener('click', () => {
+    if (currentMode === 'tutorial') return; // 教程里有内嵌帮助，无需弹窗
     helpOverlay.style.display = 'block';
   });
   helpClose.addEventListener('click', () => {

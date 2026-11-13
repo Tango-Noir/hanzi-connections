@@ -468,6 +468,18 @@ body {
   color: #888;
 }
 
+/* 教程页内嵌的帮助内容（原“点选 4 个字后提交”的位置） */
+.tutorial-help {
+  margin-top: 16px;
+}
+
+.th-title {
+  font-size: 16px;
+  font-weight: 700;
+  text-align: center;
+  margin-bottom: 8px;
+}
+
 /* 帮助小窗 */
 .help-overlay {
   display: none;
