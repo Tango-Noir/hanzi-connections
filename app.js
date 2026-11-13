@@ -166,8 +166,10 @@
     const livesLeft = MAX_MISTAKES - state.mistakes;
     for (let i = 0; i < MAX_MISTAKES; i++) {
       const h = document.createElement('span');
+      // 统一用文本样式红心（U+2665 + 文本呈现符），扣掉的状态用 CSS 变灰，
+      // 不用 emoji 字形，避免个别系统字体缺字显示乱码
+      h.textContent = '\u2665\uFE0E';
       h.className = 'heart' + (i < livesLeft ? '' : ' lost');
-      h.textContent = i < livesLeft ? '\u2764\uFE0F' : '\u1F9CD';
       row.appendChild(h);
     }
     statusEl.appendChild(row);

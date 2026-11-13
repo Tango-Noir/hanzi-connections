@@ -9,7 +9,7 @@
 <body>
   <main class="app" id="app">
     <div class="header">
-      <button id="help-btn" type="button" class="help-btn" aria-label="帮助">？</button>
+      <button id="help-btn" type="button" class="help-btn" aria-label="帮助">帮助</button>
       <h1>汉字连线</h1>
       <label class="date-field">
         <span>日期</span>
@@ -22,11 +22,14 @@
     <div id="help-overlay" class="help-overlay">
       <div class="help-box">
         <h2>怎么玩</h2>
+        <p class="help-intro">把 16 个汉字分成 4 组，每组 4 个字。组内四个字存在某种共同联系：可能是同类事物、同音、同偏旁，也可能都能和某个字组成词。</p>
         <ul class="help-list">
-          <li>点 4 个字，提交。</li>
-          <li>4 个字同属一组，就对了。</li>
-          <li>猜对 4 组，胜利。</li>
-          <li>最多只能错 4 次。</li>
+          <li>点选 4 个字后点「提交」，再次点击可取消选中。</li>
+          <li>猜对：该组锁定，并显示类别名。</li>
+          <li>猜错：扣 1 次机会；若其中有 3 个字属于同一组，会提示「差一点」。</li>
+          <li>共 4 次机会，用完即失败，并公布全部答案。</li>
+          <li>「洗牌」只打乱未解出的字。</li>
+          <li>每天更新一道题。</li>
         </ul>
         <button id="help-close" type="button" class="submit">知道了</button>
       </div>
