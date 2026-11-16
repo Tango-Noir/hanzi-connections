@@ -12,6 +12,7 @@ Page({
     // 视图状态
     view: 'select', // select | game | message
     msg: '',
+    statusBarH: 0, // 真机状态栏高度（px）；安卓上 env(safe-area-inset-top) 为 0，需 API 获取
     currentDate: '',
     showDateBtn: true,
     showHelpBtn: true,
@@ -50,6 +51,13 @@ Page({
   currentDate: '',
 
   onLoad() {
+    // 自定义导航栏：拿真实状态栏高度，避免顶部按钮被手机状态栏挡住（安卓 env() 为 0）
+    try {
+      const info = wx.getSystemInfoSync();
+      if (info && info.statusBarHeight) {
+        this.setData({ statusBarH: info.statusBarHeight });
+      }
+    } catch (e) { /* 忽略 */ }
     this.currentDate = Game.todayString();
     this.setData({ currentDate: this.currentDate });
     this.renderSelect();

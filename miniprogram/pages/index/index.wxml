@@ -1,5 +1,5 @@
 <!-- 汉字联系 · 小程序页面（结构对应网页版 index.html） -->
-<view class="app">
+<view class="app" style="padding-top: {{statusBarH + 16}}px">
   <!-- 顶部：帮助（右上）/ 返回（左上）/ 标题 / 日期按钮 / 红心 -->
   <view class="header">
     <view class="help-btn" wx:if="{{showHelpBtn}}" bindtap="openHelp">帮助</view>

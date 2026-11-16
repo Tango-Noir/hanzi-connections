@@ -5,8 +5,9 @@
   min-height: 100vh;
   text-align: center;
   padding: 16px;
-  /* 自定义导航栏：顶部留出状态栏安全区 */
-  padding-top: calc(env(safe-area-inset-top) + 16px);
+  /* 自定义导航栏：顶部留白由 JS 按真实状态栏高度设置（WXML 内联 padding-top）；
+     安卓上 env(safe-area-inset-top) 恒为 0，不可用 */
+  padding-top: 16px;
 }
 
 /* 顶部（居中） */
