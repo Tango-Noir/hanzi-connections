@@ -1,9 +1,13 @@
 <!-- 汉字联系 · 小程序页面（结构对应网页版 index.html） -->
-<view class="app" style="padding-top: {{statusBarH + 16}}px">
-  <!-- 顶部：帮助（右上）/ 返回（左上）/ 标题 / 日期按钮 / 红心 -->
+<view class="app" style="padding-top: {{statusBarH + 52}}px">
+  <!-- 顶部：胶囊（···/×）所在行整行留空；其下为大标题 + 返回/帮助行 + 日期 + 红心，
+       所有内容都位于状态栏和胶囊下方，不会被遮挡 -->
   <view class="header">
-    <view class="help-btn" wx:if="{{showHelpBtn}}" style="top: -7px; right: 88px" bindtap="openHelp">帮助</view>
-    <view class="back-btn" wx:if="{{showBackBtn}}" bindtap="goBack">← 返回</view>
+    <view class="nav-row" wx:if="{{showBackBtn || showHelpBtn}}">
+      <view class="back-btn" wx:if="{{showBackBtn}}" bindtap="goBack">← 返回</view>
+      <view class="nav-spacer"></view>
+      <view class="help-btn" wx:if="{{showHelpBtn}}" bindtap="openHelp">帮助</view>
+    </view>
     <view class="h1">汉字联系</view>
     <view class="date-btn" wx:if="{{showDateBtn}}" bindtap="openCalendar">📅 {{currentDate}}</view>
     <view class="status">

@@ -5,9 +5,9 @@
   min-height: 100vh;
   text-align: center;
   padding: 16px;
-  /* 自定义导航栏：顶部留白由 JS 按真实状态栏高度设置（WXML 内联 padding-top）；
+  /* 自定义导航栏：顶部留白 = 状态栏 + 胶囊整行（由 JS 按真实状态栏高度设置，WXML 内联）；
      安卓上 env(safe-area-inset-top) 恒为 0，不可用 */
-  padding-top: 16px;
+  padding-top: 52px;
 }
 
 /* 顶部（居中） */
@@ -20,10 +20,8 @@
   margin-bottom: 12px;
 }
 
-/* 帮助按钮：位置由 WXML 内联样式控制（top:-7px; right:88px）——
-   与微信胶囊（···/×）同一水平线、位于胶囊左侧，避免被挡 */
+/* 帮助按钮（导航行右端，位于胶囊下方，不会被挡） */
 .help-btn {
-  position: absolute;
   height: 26px;
   padding: 0 12px;
   display: flex;
@@ -36,11 +34,8 @@
   color: #555;
 }
 
-/* 左上角返回按钮（游戏中显示） */
+/* 返回按钮（导航行左端，游戏中显示） */
 .back-btn {
-  position: absolute;
-  top: 0;
-  left: 0;
   height: 26px;
   padding: 0 12px;
   display: flex;
@@ -51,11 +46,25 @@
   border-radius: 999px;
   background: #ffffff;
   color: #555;
+}
+
+/* 返回/帮助行（位于胶囊下方，整行分布） */
+.nav-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  min-height: 32px;
+  margin-bottom: 10px;
+}
+
+.nav-spacer {
+  flex: 1;
 }
 
 .h1 {
-  font-size: 20px;
+  font-size: 30px;
   font-weight: 700;
+  margin-bottom: 8px;
 }
 
 .status {
