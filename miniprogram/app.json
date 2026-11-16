@@ -6,6 +6,5 @@
     "backgroundTextStyle": "dark"
   },
   "style": "v2",
-  "sitemapLocation": "sitemap.json",
-  "lazyCodeLoading": "requiredAfterRender"
+  "sitemapLocation": "sitemap.json"
 }
