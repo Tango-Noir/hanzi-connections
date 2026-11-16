@@ -2,7 +2,7 @@
 <view class="app" style="padding-top: {{statusBarH + 16}}px">
   <!-- 顶部：帮助（右上）/ 返回（左上）/ 标题 / 日期按钮 / 红心 -->
   <view class="header">
-    <view class="help-btn" wx:if="{{showHelpBtn}}" bindtap="openHelp">帮助</view>
+    <view class="help-btn" wx:if="{{showHelpBtn}}" style="top: -7px; right: 88px" bindtap="openHelp">帮助</view>
     <view class="back-btn" wx:if="{{showBackBtn}}" bindtap="goBack">← 返回</view>
     <view class="h1">汉字联系</view>
     <view class="date-btn" wx:if="{{showDateBtn}}" bindtap="openCalendar">📅 {{currentDate}}</view>

@@ -20,11 +20,10 @@
   margin-bottom: 12px;
 }
 
-/* 右上角帮助按钮 */
+/* 帮助按钮：位置由 WXML 内联样式控制（top:-7px; right:88px）——
+   与微信胶囊（···/×）同一水平线、位于胶囊左侧，避免被挡 */
 .help-btn {
   position: absolute;
-  top: 0;
-  right: 0;
   height: 26px;
   padding: 0 12px;
   display: flex;
