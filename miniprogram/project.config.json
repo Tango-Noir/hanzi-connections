@@ -1,0 +1,19 @@
+{
+  "appid": "touristappid",
+  "compileType": "miniprogram",
+  "projectname": "hanzi-connections",
+  "description": "汉字联系（微信小程序版）",
+  "libVersion": "latest",
+  "setting": {
+    "es6": true,
+    "enhance": true,
+    "postcss": true,
+    "minified": true,
+    "urlCheck": false
+  },
+  "condition": {
+    "miniprogram": {
+      "list": []
+    }
+  }
+}

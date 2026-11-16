@@ -1,0 +1,12 @@
+/* 全局样式：对应网页版 styles.css 的 * 与 body 部分 */
+page {
+  background: #f4f4f5;
+  color: #1f1f1f;
+  font-family: system-ui, "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}

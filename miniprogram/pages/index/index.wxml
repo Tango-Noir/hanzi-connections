@@ -1,0 +1,163 @@
+<!-- 汉字联系 · 小程序页面（结构对应网页版 index.html） -->
+<view class="app">
+  <!-- 顶部：帮助（右上）/ 返回（左上）/ 标题 / 日期按钮 / 红心 -->
+  <view class="header">
+    <view class="help-btn" wx:if="{{showHelpBtn}}" bindtap="openHelp">帮助</view>
+    <view class="back-btn" wx:if="{{showBackBtn}}" bindtap="goBack">← 返回</view>
+    <view class="h1">汉字联系</view>
+    <view class="date-btn" wx:if="{{showDateBtn}}" bindtap="openCalendar">📅 {{currentDate}}</view>
+    <view class="status">
+      <view class="hearts" wx:if="{{view === 'game'}}">
+        <text wx:for="{{hearts}}" wx:key="index" class="heart">❤️</text>
+      </view>
+    </view>
+  </view>
+
+  <!-- 舞台 -->
+  <view class="stage">
+    <!-- 模式选择页（单字 / 二字 / 四字 / 教程） -->
+    <view class="select" wx:if="{{view === 'select'}}">
+      <view
+        class="select-btn"
+        wx:for="{{selectModes}}"
+        wx:key="key"
+        data-mode="{{item.key}}"
+        bindtap="onSelectMode"
+      >
+        <text class="select-title">{{item.label}}</text>
+      </view>
+      <view class="select-btn tutorial" data-mode="tutorial" bindtap="onSelectMode">
+        <text class="select-title">教程</text>
+      </view>
+    </view>
+
+    <!-- 游戏页 -->
+    <block wx:if="{{view === 'game'}}">
+      <!-- 已解出的组（网格上方；结束后由结算面板统一展示） -->
+      <view class="solved" wx:if="{{!over && solvedCards.length}}">
+        <view
+          wx:for="{{solvedCards}}"
+          wx:key="category"
+          class="group-card m{{mode}} {{item.color}}"
+        >
+          <view class="group-category">{{item.category}}</view>
+          <view class="group-items">
+            <text
+              wx:for="{{item.items}}"
+              wx:for-item="ch"
+              wx:key="*this"
+              class="group-item"
+            >{{ch}}</text>
+          </view>
+        </view>
+      </view>
+
+      <!-- 4x4 网格（剩余未解出的字/词，保持打乱后的原顺序） -->
+      <view class="grid m{{mode}}" wx:if="{{remaining.length}}">
+        <view
+          wx:for="{{remaining}}"
+          wx:key="ch"
+          class="tile m{{mode}} {{item.selected ? 'selected' : ''}}"
+          data-ch="{{item.ch}}"
+          bindtap="onTileTap"
+        >{{item.ch}}</view>
+      </view>
+
+      <!-- “差一点”提示 -->
+      <view class="close-hint" wx:if="{{closeHint}}">差一点</view>
+
+      <!-- 提交 / 洗牌 -->
+      <view class="controls">
+        <view class="submit {{canSubmit ? '' : 'disabled'}}" bindtap="onSubmit">提交</view>
+        <view class="btn-row">
+          <view class="btn-secondary {{over ? 'disabled' : ''}}" bindtap="onShuffle">洗牌</view>
+        </view>
+      </view>
+
+      <!-- 教程模式：按钮下方直接展示「帮助」内容 -->
+      <view class="tutorial-help" wx:if="{{isTutorial}}">
+        <view class="th-title">怎么玩</view>
+        <view class="help-intro">
+          <text wx:for="{{helpIntroSegs}}" wx:key="t" class="{{seg.hl ? 'hl' : ''}}">{{seg.t}}</text>
+        </view>
+        <view class="help-list">
+          <view class="help-li" wx:for="{{helpItems}}" wx:key="index" wx:for-item="line">
+            <text wx:for="{{line}}" wx:key="t" wx:for-item="seg" class="{{seg.hl ? 'hl' : ''}}">{{seg.t}}</text>
+          </view>
+        </view>
+      </view>
+
+      <!-- 结算面板（直接显示在页面上，不做弹窗） -->
+      <view class="result" wx:if="{{over}}">
+        <view class="result-title">{{won ? '胜利' : '失败'}}</view>
+        <view class="result-meta">错误 {{mistakes}} 次</view>
+        <view
+          wx:for="{{resultCards}}"
+          wx:key="category"
+          class="group-card m{{mode}} {{item.color}}"
+        >
+          <view class="group-category">{{item.category}}</view>
+          <view class="group-items">
+            <text
+              wx:for="{{item.items}}"
+              wx:for-item="ch"
+              wx:key="*this"
+              class="group-item"
+            >{{ch}}</text>
+          </view>
+        </view>
+      </view>
+    </block>
+
+    <!-- 空状态 / 配置错误 -->
+    <view class="message-box" wx:if="{{view === 'message'}}">
+      <view class="msg-text">{{msg}}</view>
+    </view>
+  </view>
+
+  <!-- 自绘日历浮层（与网页版一致：只有有题的日期可点；整月无题不可翻到） -->
+  <view class="cal-overlay" wx:if="{{calOpen}}" bindtap="onCalOverlayTap">
+    <view class="cal-box" catchtap="noop">
+      <view class="cal-nav">
+        <view
+          class="cal-nav-btn {{calPrevDisabled ? 'disabled' : ''}}"
+          catchtap="onCalPrev"
+        >«</view>
+        <view class="cal-title">{{calTitle}}</view>
+        <view
+          class="cal-nav-btn {{calNextDisabled ? 'disabled' : ''}}"
+          catchtap="onCalNext"
+        >»</view>
+      </view>
+      <view class="cal-grid">
+        <view class="cal-wd" wx:for="{{weekChars}}" wx:key="*this">{{item}}</view>
+        <view class="cal-blank" wx:for="{{calBlanks}}" wx:key="index"></view>
+        <view
+          wx:for="{{calDays}}"
+          wx:key="key"
+          class="cal-day {{item.ok ? 'on' : 'off'}} {{item.sel ? 'sel' : ''}} {{item.today ? 'today' : ''}}"
+          data-d="{{item.key}}"
+          catchtap="onSelectDate"
+        >{{item.d}}</view>
+      </view>
+      <view class="cal-tip">只有已出题的日期可以选</view>
+      <view class="submit" catchtap="onCalClose">完成</view>
+    </view>
+  </view>
+
+  <!-- 帮助小窗 -->
+  <view class="help-overlay" wx:if="{{helpOpen}}" bindtap="onHelpOverlayTap">
+    <view class="help-box" catchtap="noop">
+      <view class="help-title">怎么玩</view>
+      <view class="help-intro">
+        <text wx:for="{{helpIntroSegs}}" wx:key="t" class="{{seg.hl ? 'hl' : ''}}">{{seg.t}}</text>
+      </view>
+      <view class="help-list">
+        <view class="help-li" wx:for="{{helpItems}}" wx:key="index" wx:for-item="line">
+          <text wx:for="{{line}}" wx:key="t" wx:for-item="seg" class="{{seg.hl ? 'hl' : ''}}">{{seg.t}}</text>
+        </view>
+      </view>
+      <view class="submit" catchtap="onHelpClose">知道了</view>
+    </view>
+  </view>
+</view>

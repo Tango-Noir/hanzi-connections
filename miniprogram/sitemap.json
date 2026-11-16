@@ -1,0 +1,9 @@
+{
+  "desc": "汉字联系",
+  "rules": [
+    {
+      "action": "allow",
+      "page": "*"
+    }
+  ]
+}

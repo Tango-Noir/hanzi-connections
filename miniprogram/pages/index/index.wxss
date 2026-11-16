@@ -1,0 +1,506 @@
+/* 汉字联系 · 页面样式（与网页版 styles.css 1:1 对应） */
+
+.app {
+  width: 100%;
+  min-height: 100vh;
+  text-align: center;
+  padding: 16px;
+  /* 自定义导航栏：顶部留出状态栏安全区 */
+  padding-top: calc(env(safe-area-inset-top) + 16px);
+}
+
+/* 顶部（居中） */
+.header {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  margin-bottom: 12px;
+}
+
+/* 右上角帮助按钮 */
+.help-btn {
+  position: absolute;
+  top: 0;
+  right: 0;
+  height: 26px;
+  padding: 0 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  border: 1px solid #cfcfcf;
+  border-radius: 999px;
+  background: #ffffff;
+  color: #555;
+}
+
+/* 左上角返回按钮（游戏中显示） */
+.back-btn {
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 26px;
+  padding: 0 12px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 13px;
+  border: 1px solid #cfcfcf;
+  border-radius: 999px;
+  background: #ffffff;
+  color: #555;
+}
+
+.h1 {
+  font-size: 20px;
+  font-weight: 700;
+}
+
+.status {
+  font-size: 14px;
+  color: #666;
+  min-height: 24px;
+}
+
+/* 红心（错误次数）：扣心 = 直接减少颗数 */
+.hearts {
+  display: inline-flex;
+  gap: 5px;
+  font-size: 20px;
+  line-height: 1;
+}
+
+.heart {
+  color: #e5484d;
+}
+
+/* 模式选择页（单字 / 二字 / 四字） */
+.select {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 24px 8px;
+}
+
+.select-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  padding: 18px;
+  border: 1px solid #dcdcdc;
+  border-radius: 12px;
+  background: #ffffff;
+  color: #1f1f1f;
+}
+
+.select-btn:active {
+  background: #f0f0f0;
+}
+
+.select-title {
+  font-size: 20px;
+  font-weight: 700;
+}
+
+/* 教程按钮（固定例题，非每日题） */
+.select-btn.tutorial {
+  border-style: dashed;
+  background: #fafafa;
+}
+
+/* 日期选择按钮（打开自绘日历） */
+.date-btn {
+  font-size: 14px;
+  padding: 6px 14px;
+  border: 1px solid #cfcfcf;
+  border-radius: 999px;
+  background: #ffffff;
+  color: #1f1f1f;
+}
+
+.date-btn:active {
+  background: #f0f0f0;
+}
+
+/* 日历浮层 */
+.cal-overlay {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background: rgba(0, 0, 0, 0.45);
+  z-index: 50;
+}
+
+.cal-box {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 320px;
+  max-width: 92vw;
+  background: #ffffff;
+  border-radius: 14px;
+  padding: 18px 16px;
+}
+
+.cal-nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+
+.cal-title {
+  font-size: 15px;
+  font-weight: 700;
+}
+
+.cal-nav-btn {
+  width: 32px;
+  height: 32px;
+  font-size: 18px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #dcdcdc;
+  border-radius: 8px;
+  background: #ffffff;
+  color: #333;
+}
+
+.cal-nav-btn.disabled {
+  color: #c8c8c8;
+  border-color: #ececec;
+}
+
+.cal-grid {
+  display: grid;
+  grid-template-columns: repeat(7, 1fr);
+  gap: 5px;
+}
+
+.cal-wd {
+  text-align: center;
+  font-size: 12px;
+  color: #999;
+  padding: 4px 0;
+}
+
+.cal-blank {
+  display: block;
+}
+
+.cal-day {
+  aspect-ratio: 1 / 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
+  border-radius: 8px;
+  background: transparent;
+}
+
+.cal-day.on {
+  background: #dbe9f8;
+  color: #1f4f7a;
+}
+
+.cal-day.on:active {
+  background: #bcd7f2;
+}
+
+.cal-day.off {
+  color: #c4c4c4;
+}
+
+.cal-day.today {
+  box-shadow: inset 0 0 0 1.5px #4a90d9;
+}
+
+.cal-day.sel {
+  background: #4a90d9;
+  color: #ffffff;
+  font-weight: 700;
+}
+
+.cal-tip {
+  font-size: 12px;
+  color: #999;
+  text-align: center;
+  margin: 12px 0 12px;
+}
+
+/* 已解出的组（网格上方） */
+.solved {
+  margin-bottom: 12px;
+}
+
+.group-card {
+  background: #ffffff;
+  border: 1px solid #dcdcdc;
+  border-radius: 10px;
+  padding: 10px 12px;
+  margin-bottom: 8px;
+}
+
+.group-category {
+  font-size: 14px;
+  color: #555;
+  margin-bottom: 8px;
+  text-align: center;
+}
+
+.group-items {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 6px;
+}
+
+.group-item {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 44px;
+  height: 44px;
+  padding: 0 8px;
+  font-size: 20px;
+  background: #ececec;
+  border-radius: 8px;
+}
+
+/* 各模式字号：单字 / 二字 / 四字 */
+.group-card.m2 .group-item {
+  font-size: 20px;
+}
+
+.group-card.m4 .group-item {
+  font-size: 16px;
+  padding: 0 10px;
+}
+
+/* 组颜色（color 字段，只用于已解出组和结算面板） */
+.group-card.yellow {
+  background: #fbf3cd;
+  border-color: #e0c75e;
+}
+
+.group-card.green {
+  background: #dcf1e3;
+  border-color: #7cc295;
+}
+
+.group-card.blue {
+  background: #dbe9f8;
+  border-color: #7fa8d6;
+}
+
+.group-card.purple {
+  background: #e9dff6;
+  border-color: #a98bda;
+}
+
+/* “差一点”提示 */
+.close-hint {
+  font-size: 14px;
+  color: #c0392b;
+  margin: 14px 0 14px;
+}
+
+/* 4x4 网格 */
+.grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
+  margin-bottom: 16px;
+}
+
+.tile {
+  aspect-ratio: 1 / 1;
+  font-size: clamp(20px, 6vw, 26px);
+  border: 1px solid #cfcfcf;
+  border-radius: 10px;
+  background: #ffffff;
+  color: #1f1f1f;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* 各模式格子字号：单字 / 二字 / 四字 */
+.tile.m2 {
+  aspect-ratio: 2.1 / 1;
+  font-size: clamp(17px, 5vw, 21px);
+}
+
+.tile.m4 {
+  aspect-ratio: 2.4 / 1;
+  font-size: clamp(14px, 4.2vw, 17px);
+  line-height: 1.25;
+}
+
+.tile.selected {
+  background: #1f1f1f;
+  border-color: #1f1f1f;
+  color: #ffffff;
+}
+
+/* 提交 */
+.controls {
+  margin-bottom: 16px;
+}
+
+.submit {
+  width: 100%;
+  padding: 12px;
+  font-size: 16px;
+  border-radius: 10px;
+  background: #1f1f1f;
+  color: #ffffff;
+}
+
+.submit.disabled {
+  background: #b8b8b8;
+}
+
+/* 洗牌 / 重新开始 */
+.btn-row {
+  display: flex;
+  gap: 8px;
+  margin-top: 8px;
+}
+
+.btn-secondary {
+  flex: 1;
+  width: auto;
+  padding: 10px;
+  font-size: 14px;
+  border: 1px solid #cfcfcf;
+  border-radius: 10px;
+  background: #ffffff;
+  color: #1f1f1f;
+}
+
+.btn-secondary.disabled {
+  color: #b8b8b8;
+  border-color: #e5e5e5;
+}
+
+.hint {
+  margin-top: 8px;
+  font-size: 13px;
+  color: #999;
+  text-align: center;
+}
+
+/* 结束结果（直接显示在页面上） */
+.result {
+  background: #ffffff;
+  border: 1px solid #dcdcdc;
+  border-radius: 10px;
+  padding: 12px;
+  margin-top: 8px;
+}
+
+.result-title {
+  font-size: 18px;
+  font-weight: 700;
+  margin-bottom: 6px;
+}
+
+.result-meta {
+  font-size: 14px;
+  color: #666;
+  margin-bottom: 10px;
+}
+
+/* 空状态 / 配置错误 */
+.message-box {
+  text-align: center;
+  padding: 80px 0;
+}
+
+.msg-text {
+  font-size: 16px;
+  color: #888;
+}
+
+/* 教程页内嵌的帮助内容 */
+.tutorial-help {
+  margin-top: 16px;
+}
+
+.th-title {
+  font-size: 16px;
+  font-weight: 700;
+  text-align: center;
+  margin-bottom: 8px;
+}
+
+/* 帮助小窗 */
+.help-overlay {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  left: 0;
+  background: rgba(0, 0, 0, 0.45);
+  z-index: 10;
+}
+
+.help-box {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 85%;
+  max-width: 340px;
+  background: #ffffff;
+  border-radius: 12px;
+  padding: 16px;
+  text-align: center;
+}
+
+.help-title {
+  font-size: 18px;
+  font-weight: 700;
+  margin-bottom: 10px;
+}
+
+.help-intro {
+  font-size: 14px;
+  color: #555;
+  line-height: 1.7;
+  text-align: left;
+  margin-bottom: 10px;
+}
+
+/* 帮助文案中的红色强调 */
+.hl {
+  color: #e5484d;
+}
+
+.help-list {
+  padding-left: 18px;
+  font-size: 14px;
+  line-height: 1.9;
+  color: #444;
+  text-align: left;
+  margin-bottom: 14px;
+}
+
+.help-li {
+  position: relative;
+  padding-left: 4px;
+}
+
+.help-li::before {
+  content: "•";
+  position: absolute;
+  left: 0;
+}
