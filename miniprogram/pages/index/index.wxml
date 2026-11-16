@@ -3,14 +3,14 @@
   <!-- 顶部：胶囊（···/×）所在行整行留空；其下为大标题 + 返回/帮助行 + 日期 + 红心，
        所有内容都位于状态栏和胶囊下方，不会被遮挡 -->
   <view class="header">
-    <view class="h1">汉字联系</view>
     <view class="nav-row" wx:if="{{showBackBtn}}">
       <view class="back-btn" bindtap="goBack">← 返回</view>
     </view>
-    <view class="date-row">
-      <view class="date-btn" wx:if="{{showDateBtn}}" bindtap="openCalendar">📅 {{currentDate}}</view>
+    <view class="title-row">
+      <view class="h1">汉字联系</view>
       <view class="help-btn" wx:if="{{showHelpBtn}}" bindtap="openHelp">帮助</view>
     </view>
+    <view class="date-btn" wx:if="{{showDateBtn}}" bindtap="openCalendar">📅 {{currentDate}}</view>
     <view class="status">
       <view class="hearts" wx:if="{{view === 'game'}}">
         <text wx:for="{{hearts}}" wx:key="index" class="heart">❤️</text>

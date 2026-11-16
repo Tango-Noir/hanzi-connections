@@ -16,12 +16,16 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 4px;
+  gap: 8px;
   margin-bottom: 12px;
 }
 
-/* 帮助按钮（导航行右端，位于胶囊下方，不会被挡） */
+/* 帮助按钮（标题行右侧，与网页版一致：标题居中、帮助靠右） */
 .help-btn {
+  position: absolute;
+  right: 0;
+  top: 50%;
+  transform: translateY(-50%);
   height: 26px;
   padding: 0 12px;
   display: flex;
@@ -34,7 +38,7 @@
   color: #555;
 }
 
-/* 返回按钮（导航行左端，游戏中显示） */
+/* 返回按钮（标题上方左端，游戏中显示） */
 .back-btn {
   height: 26px;
   padding: 0 12px;
@@ -48,23 +52,25 @@
   color: #555;
 }
 
-/* 返回/帮助行（位于胶囊下方，整行分布） */
+/* 返回行（左对齐） */
 .nav-row {
   display: flex;
   align-items: center;
-  justify-content: space-between;
+  width: 100%;
   min-height: 32px;
-  margin-bottom: 10px;
 }
 
-.nav-spacer {
-  flex: 1;
+/* 标题行：标题居中 + 帮助绝对定位靠右 */
+.title-row {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
 }
 
 .h1 {
   font-size: 30px;
   font-weight: 700;
-  margin-bottom: 8px;
 }
 
 .status {
@@ -118,14 +124,6 @@
 .select-btn.tutorial {
   border-style: dashed;
   background: #fafafa;
-}
-
-/* 日期 + 帮助 同行（居中） */
-.date-row {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 10px;
 }
 
 /* 日期选择按钮（打开自绘日历） */
