@@ -16,6 +16,7 @@ import datetime as _dt
 import json
 import os
 import re
+import shutil
 import subprocess
 import sys
 import threading
@@ -367,6 +368,8 @@ class EditorApp:
         ttk.Button(btns, text='删除该日期题目', command=self.on_delete).pack(side='left', padx=(8, 0))
         self.push_btn = ttk.Button(btns, text='推送到 GitHub', command=self.on_push)
         self.push_btn.pack(side='right')
+        self.sync_btn = ttk.Button(btns, text='同步到小程序', command=self.on_sync_mp)
+        self.sync_btn.pack(side='right', padx=(0, 8))
 
         self.status = tk.StringVar(value=self.warn or '就绪')
         self.status_lbl = ttk.Label(r, textvariable=self.status, anchor='w', foreground='#0a600a', padding=(10, 4))
@@ -458,7 +461,7 @@ class EditorApp:
 
     def _git(self, args, timeout=120):
         return subprocess.run(['git'] + args, cwd=BASE, capture_output=True,
-                              text=True, timeout=timeout)
+                              encoding='utf-8', errors='replace', timeout=timeout)
 
     def on_push(self):
         if not os.path.isdir(os.path.join(BASE, '.git')):
@@ -502,6 +505,53 @@ class EditorApp:
         else:
             self._set_status(msg, False)
             messagebox.showerror('推送失败', msg)
+
+    # ---------- 同步到小程序（convert.js 生成 data/*.js → 复制到 C:\hanzi-mp） ----------
+
+    MP_DIR = os.path.join('C:', os.sep, 'hanzi-mp')
+
+    def on_sync_mp(self):
+        if not os.path.isdir(os.path.join(BASE, 'miniprogram')):
+            messagebox.showerror('同步失败', '未找到 miniprogram 目录')
+            return
+        self.sync_btn.config(state='disabled', text='同步中…')
+        self._set_status('正在同步题库到小程序…', True)
+        threading.Thread(target=self._sync_mp_worker, daemon=True).start()
+
+    def _sync_mp_worker(self):
+        kind, msg = 'err', ''
+        try:
+            cr = subprocess.run(['node', 'tools/convert.js'], cwd=os.path.join(BASE, 'miniprogram'),
+                                 capture_output=True, encoding='utf-8', errors='replace', timeout=60)
+            if cr.returncode != 0:
+                detail = (cr.stderr or cr.stdout).strip().splitlines()[-1] if (cr.stderr or cr.stdout).strip() else '未知错误'
+                raise RuntimeError('convert.js 执行失败：' + detail)
+            src = os.path.join(BASE, 'miniprogram')
+            os.makedirs(self.MP_DIR, exist_ok=True)
+            for name in os.listdir(src):
+                if name == 'project.private.config.json':  # 工具本机配置，不覆盖
+                    continue
+                s = os.path.join(src, name)
+                d = os.path.join(self.MP_DIR, name)
+                if os.path.isdir(s):
+                    shutil.copytree(s, d, dirs_exist_ok=True)
+                else:
+                    shutil.copy2(s, d)
+            kind, msg = 'ok', '同步成功！小程序题库已更新（C:\\hanzi-mp）。\n下一步：微信开发者工具 → 编译 / 预览'
+        except subprocess.TimeoutExpired:
+            kind, msg = 'err', '同步失败：convert.js 超时，请重试。'
+        except Exception as e:
+            kind, msg = 'err', '同步失败：%s' % e
+        self.root.after(0, self._sync_mp_done, kind, msg)
+
+    def _sync_mp_done(self, kind, msg):
+        self.sync_btn.config(state='normal', text='同步到小程序')
+        if kind == 'ok':
+            self._set_status(msg.splitlines()[0], True)
+            messagebox.showinfo('同步成功', msg)
+        else:
+            self._set_status(msg, False)
+            messagebox.showerror('同步失败', msg)
 
     def run(self):
         self.root.mainloop()

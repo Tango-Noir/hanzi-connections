@@ -2,9 +2,9 @@
 const Game = require('../../utils/game.js');
 
 const BOOKS = {
-  1: require('../../data/puzzles.json'),
-  2: require('../../data/puzzles-2zi.json'),
-  4: require('../../data/puzzles-4zi.json'),
+  1: require('../../data/puzzles.js'),
+  2: require('../../data/puzzles-2zi.js'),
+  4: require('../../data/puzzles-4zi.js'),
 };
 
 Page({
