@@ -1,0 +1,14 @@
+{
+  "name": "hanzi-connections-promo",
+  "private": true,
+  "scripts": {
+    "preview": "remotion studio src/index.tsx --no-open",
+    "render": "remotion render src/index.tsx HanziPromo out.mp4 --concurrency 2"
+  },
+  "dependencies": {
+    "@remotion/cli": "4.0.539",
+    "react": "18.3.1",
+    "react-dom": "18.3.1",
+    "remotion": "4.0.539"
+  }
+}

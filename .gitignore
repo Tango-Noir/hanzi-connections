@@ -1,1 +1,10 @@
-﻿Thumbs.db.DS_Store*.bak.js*.tmp.js__pycache__/__cchrome/promo-assets/promo-video/node_modules/宣传视频/__*__.js
+Thumbs.db
+.DS_Store
+*.bak.js
+*.tmp.js
+__pycache__/
+__cchrome/
+__*__.js
+promo-assets/
+promo-video/node_modules/
+宣传视频/
