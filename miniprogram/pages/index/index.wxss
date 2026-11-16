@@ -120,6 +120,14 @@
   background: #fafafa;
 }
 
+/* 日期 + 帮助 同行（居中） */
+.date-row {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+}
+
 /* 日期选择按钮（打开自绘日历） */
 .date-btn {
   font-size: 14px;
